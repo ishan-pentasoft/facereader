@@ -1,5 +1,6 @@
 import { Norican, Roboto } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const norican = Norican({
   variable: "--font-norican",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${norican.variable} ${roboto.variable} antialiased`}>
         {children}
+        <Toaster position="top-center" />
       </body>
     </html>
   );
