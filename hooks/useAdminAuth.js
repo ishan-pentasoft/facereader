@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 export function useAdminAuth() {
   const [authState, setAuthState] = useState({
@@ -99,6 +100,7 @@ export function useAdminAuth() {
         const err = await safeJson(res);
         throw new Error(err?.error || err?.message || "Logout failed");
       }
+      toast.success("Logged out successfully");
     } catch (error) {
       // swallow error but still clear local state
     } finally {
@@ -108,7 +110,7 @@ export function useAdminAuth() {
         isAuthenticated: false,
         error: null,
       });
-      router.push("/admin/auth/login");
+      router.push("/");
     }
   }, [router]);
 
