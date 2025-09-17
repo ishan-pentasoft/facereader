@@ -30,7 +30,8 @@
     "components/ui/text-generate-effect.jsx",
     "components/ui/sparkles.jsx",
     "components/ui/spotlight.jsx",
-    "components/ui/floating-dock.jsx"
+    "components/ui/floating-dock.jsx",
+    "lib/utils.js"
   ],
   "exclude": ["node_modules"]
 }
