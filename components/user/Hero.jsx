@@ -24,7 +24,7 @@ const Hero = memo(() => {
       <Spotlight fill="#FFFFFF" className="top-0 left-0" />
       <Spotlight fill="#3B82F6" className="top-20 right-10 opacity-50" />
       <Spotlight fill="#8B5CF6" className="bottom-10 left-20 opacity-40" />
-      <div className="w-full flex flex-col items-center justify-center p-10 max-w-3xl z-50 ">
+      <div className="w-full flex flex-col items-center justify-center p-10 max-w-3xl z-20 ">
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
