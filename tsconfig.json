@@ -29,7 +29,8 @@
     "**/*.tsx",
     "components/ui/text-generate-effect.jsx",
     "components/ui/sparkles.jsx",
-    "components/ui/spotlight.jsx"
+    "components/ui/spotlight.jsx",
+    "components/ui/floating-dock.jsx"
   ],
   "exclude": ["node_modules"]
 }
