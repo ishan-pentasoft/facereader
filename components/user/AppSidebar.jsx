@@ -10,9 +10,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "../ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,13 +17,6 @@ import {
   ChevronsUpDown,
   LogOut,
   LayoutDashboard,
-  Users,
-  ChevronRight,
-  Settings,
-  FolderOpen,
-  Package,
-  ShoppingCart,
-  FileText,
   BookUser,
   LockKeyhole,
 } from "lucide-react";
@@ -84,6 +74,16 @@ const AppSidebar = () => {
                   <LayoutDashboard />
                   <span className="group-data-[collapsible=icon]:hidden">
                     Dashboard
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Contact Details">
+                <Link href="/admin/dashboard/contact">
+                  <BookUser />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Contact Details
                   </span>
                 </Link>
               </SidebarMenuButton>
