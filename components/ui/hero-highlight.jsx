@@ -97,21 +97,22 @@ export const Highlight = ({ children, className }) => {
     <motion.span
       initial={{
         backgroundSize: "0% 100%",
+        opacity: 1,
+        y: 0,
       }}
-      animate={{
+      whileInView={{
         backgroundSize: "100% 100%",
+        opacity: 1,
+        y: 0,
       }}
       transition={{
         duration: 2,
         ease: "linear",
         delay: 0.5,
       }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
       viewport={{
         once: true,
+        amount: 0.3,
       }}
       style={{
         backgroundRepeat: "no-repeat",

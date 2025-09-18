@@ -19,7 +19,7 @@ const TopBanner = () => {
               href={`tel:${contact.details.phone1}`}
               className="flex items-center justify-center gap-1"
             >
-              <Phone className="h-4 w-4 text-[#6f2d72]" fill="#6f2d72" />
+              <Phone className="h-4 w-4 text-orange-500 fill-orange-500" />
               <span className="font-medium text-sm hover:text-muted-foreground transition-colors">
                 {contact.details.phone1}
               </span>
@@ -28,7 +28,7 @@ const TopBanner = () => {
               href={`tel:${contact.details.phone2}`}
               className="md:flex items-center justify-center gap-1 hidden"
             >
-              <Phone className="h-4 w-4 text-[#6f2d72]" fill="#6f2d72" />
+              <Phone className="h-4 w-4 text-orange-500 fill-orange-500" />
               <span className="font-medium text-sm hover:text-muted-foreground transition-colors">
                 {contact.details.phone2}
               </span>
@@ -47,7 +47,7 @@ const TopBanner = () => {
             href={`mailto:${contact.details.email}`}
             className="flex items-center justify-center gap-1"
           >
-            <MailCheckIcon className="h-5 w-5 text-white" fill="#6f2d72" />
+            <MailCheckIcon className="h-5 w-5 text-white fill-orange-500" />
             <span className="font-medium text-sm hover:text-muted-foreground transition-colors">
               {contact.details.email}
             </span>

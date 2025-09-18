@@ -16,7 +16,15 @@ const Dock = () => {
   const links = [
     {
       title: "Home",
-      icon: <Image src="/nav_logo.png" alt="Logo" width={20} height={20} />,
+      icon: (
+        <Image
+          src="/nav_logo.png"
+          alt="Logo"
+          width={20}
+          height={20}
+          className="h-full w-full"
+        />
+      ),
       href: "/",
     },
     {
@@ -25,8 +33,7 @@ const Dock = () => {
         <User
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#510056]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
@@ -37,8 +44,7 @@ const Dock = () => {
         <Star
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#510056]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
@@ -46,7 +52,11 @@ const Dock = () => {
     {
       title: "Face Reading",
       icon: (
-        <Eye width={20} height={20} fill="#510056" className="text-[#6f2d72]" />
+        <Eye
+          width={20}
+          height={20}
+          className="text-orange-800 fill-orange-500"
+        />
       ),
       href: "/",
     },
@@ -56,8 +66,7 @@ const Dock = () => {
         <HeartHandshake
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#6f2d72]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
@@ -68,8 +77,7 @@ const Dock = () => {
         <Building2
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#6f2d72]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
@@ -80,8 +88,7 @@ const Dock = () => {
         <Package
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#6f2d72]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
@@ -92,8 +99,7 @@ const Dock = () => {
         <Phone
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#6f2d72]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
@@ -104,8 +110,7 @@ const Dock = () => {
         <CreditCard
           width={20}
           height={20}
-          fill="#510056"
-          className="text-[#6f2d72]"
+          className="text-orange-800 fill-orange-500"
         />
       ),
       href: "/",
