@@ -23,7 +23,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${norican.variable} ${roboto.variable} antialiased`}>
+      <body
+        className={`${norican.variable} ${roboto.variable} antialiased font-roboto`}
+      >
         {children}
         <Toaster position="top-center" />
       </body>
