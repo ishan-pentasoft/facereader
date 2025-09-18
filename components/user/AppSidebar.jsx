@@ -19,6 +19,7 @@ import {
   LayoutDashboard,
   BookUser,
   LockKeyhole,
+  MessageSquareText,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -84,6 +85,16 @@ const AppSidebar = () => {
                   <BookUser />
                   <span className="group-data-[collapsible=icon]:hidden">
                     Contact Details
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Reviews">
+                <Link href="/admin/dashboard/reviews">
+                  <MessageSquareText />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Reviews
                   </span>
                 </Link>
               </SidebarMenuButton>
