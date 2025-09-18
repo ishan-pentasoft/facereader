@@ -13,6 +13,13 @@ const Hero = memo(() => {
       aria-label="Hero section with astrology theme"
     >
       <div className="absolute inset-0 bg-black"></div>
+      <Image
+        src="/shape.svg"
+        alt="Shape"
+        width={500}
+        height={500}
+        className="w-full h-10vh absolute rotate-180 -bottom-0.5 z-30"
+      />
       <SparklesCore
         background="transparent"
         minSize={0.4}
