@@ -89,6 +89,7 @@ const ServiceGrid = memo(() => {
             priority={false}
             loading="lazy"
             sizes="(max-width: 768px) 250px, 300px"
+            draggable={false}
           />
         </motion.div>
 
@@ -111,6 +112,6 @@ const ServiceGrid = memo(() => {
   );
 });
 
-ServiceGrid.displayName = 'ServiceGrid';
+ServiceGrid.displayName = "ServiceGrid";
 
 export default ServiceGrid;

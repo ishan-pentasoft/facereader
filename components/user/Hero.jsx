@@ -19,6 +19,7 @@ const Hero = memo(() => {
         width={500}
         height={500}
         className="w-full h-10vh absolute rotate-180 -bottom-0.5 z-30"
+        draggable={false}
       />
       <SparklesCore
         background="transparent"
@@ -47,6 +48,7 @@ const Hero = memo(() => {
             sizes="(max-width: 768px) 300px, (max-width: 1200px) 400px, 500px"
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            draggable={false}
           />
         </motion.div>
         <motion.h1
@@ -59,7 +61,7 @@ const Hero = memo(() => {
         </motion.h1>
         <TextGenerateEffect
           words="Astrology is an ancient Indian science, which describes planetary motions and positions with the time and its effects on humans and other lives on the earth."
-          className="font-norican text-center"
+          className="font-norican text-center text-2xl"
           role="text"
           aria-label="Description of astrology"
         />
@@ -78,6 +80,7 @@ const Hero = memo(() => {
           className="animate-spin-slow will-change-transform"
           loading="lazy"
           sizes="(max-width: 768px) 300px, 500px"
+          draggable={false}
         />
       </motion.div>
       <motion.div
@@ -94,6 +97,7 @@ const Hero = memo(() => {
           className="opacity-60"
           loading="lazy"
           sizes="(max-width: 768px) 250px, 400px"
+          draggable={false}
         />
       </motion.div>
     </section>
