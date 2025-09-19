@@ -11,7 +11,7 @@ const Testimonial = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await fetch("/api/reviews", {
+      const response = await fetch("/api/user/reviews", {
         method: "GET",
       });
 
@@ -22,7 +22,6 @@ const Testimonial = () => {
       const data = await response.json();
       setTestimonialsData(data.success ? data.reviews : []);
     } catch (err) {
-      setError(err.message);
       console.error("Error fetching testimonials:", err);
     }
   };
@@ -39,7 +38,7 @@ const Testimonial = () => {
     }));
 
     return (
-      <>
+      <div className="px-5">
         <motion.div
           className="pt-20 max-w-3xl mx-auto w-full"
           initial={{ opacity: 0, y: 50 }}
@@ -88,7 +87,7 @@ const Testimonial = () => {
         >
           <AnimatedTestimonials testimonials={testimonials} />
         </section>
-      </>
+      </div>
     );
   }
 };

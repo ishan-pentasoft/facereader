@@ -227,3 +227,34 @@
     opacity: 0;
   }
 }
+
+.prose h1 {
+  @apply text-3xl font-extrabold leading-tight;
+}
+.prose h2 {
+  @apply text-2xl font-bold leading-snug;
+}
+.prose h3 {
+  @apply text-xl font-semibold;
+}
+.prose h4 {
+  @apply text-lg font-semibold;
+}
+.prose h5 {
+  @apply text-base font-semibold;
+}
+.prose h6 {
+  @apply text-sm font-semibold uppercase tracking-wide;
+}
+.prose p {
+  @apply leading-relaxed text-justify mb-2;
+}
+.prose ul {
+  @apply list-disc;
+}
+.prose ol {
+  @apply list-decimal;
+}
+.prose a {
+  @apply underline underline-offset-4 decoration-white/30 hover:decoration-white;
+}

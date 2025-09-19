@@ -9,6 +9,7 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
+import Link from "next/link";
 
 import { useRef, useState } from "react";
 
@@ -48,7 +49,7 @@ const FloatingDockMobile = ({ items, className }) => {
                 }}
                 transition={{ delay: (items.length - 1 - idx) * 0.05 }}
               >
-                <a
+                <Link
                   href={item.href}
                   key={item.title}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-400 border-orange-800 border mx-auto"
@@ -56,7 +57,7 @@ const FloatingDockMobile = ({ items, className }) => {
                   <div className="h-8 w-8 flex items-center justify-center">
                     {item.icon}
                   </div>
-                </a>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
@@ -134,7 +135,7 @@ function IconContainer({ mouseX, title, icon, href }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a href={href}>
+    <Link href={href}>
       <motion.div
         ref={ref}
         style={{ width, height }}
@@ -161,6 +162,6 @@ function IconContainer({ mouseX, title, icon, href }) {
           {icon}
         </motion.div>
       </motion.div>
-    </a>
+    </Link>
   );
 }
