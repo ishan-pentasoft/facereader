@@ -10,3 +10,7 @@ export const pageSchema = z.object({
     .min(10, "Description must be at least 10 characters long"),
   image: z.string(),
 });
+
+export const paynowSchema = z.object({
+  image: z.string(),
+});
