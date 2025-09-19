@@ -61,7 +61,7 @@ const Dock = () => {
       href: "/face-reading",
     },
     {
-      title: "Match Making Compatibility / Kundali Dosha",
+      title: "Kundali Dosha",
       icon: (
         <HeartHandshake
           width={20}
@@ -69,7 +69,7 @@ const Dock = () => {
           className="text-orange-800 fill-orange-500"
         />
       ),
-      href: "/",
+      href: "/kundali-dosha",
     },
     {
       title: "Vastu",
