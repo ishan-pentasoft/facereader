@@ -20,7 +20,7 @@ const TopBanner = () => {
               className="flex items-center justify-center gap-1"
             >
               <Phone className="h-4 w-4 text-orange-500 fill-orange-500" />
-              <span className="font-medium text-sm hover:text-muted-foreground transition-colors">
+              <span className="font-medium text-xs sm:text-sm hover:text-muted-foreground transition-colors">
                 {contact.details.phone1}
               </span>
             </Link>
@@ -48,7 +48,7 @@ const TopBanner = () => {
             className="flex items-center justify-center gap-1"
           >
             <MailCheckIcon className="h-5 w-5 text-white fill-orange-500" />
-            <span className="font-medium text-sm hover:text-muted-foreground transition-colors">
+            <span className="font-medium text-xs sm:text-sm hover:text-muted-foreground transition-colors">
               {contact.details.email}
             </span>
           </Link>
