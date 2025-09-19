@@ -58,7 +58,7 @@ const Dock = () => {
           className="text-orange-800 fill-orange-500"
         />
       ),
-      href: "/",
+      href: "/face-reading",
     },
     {
       title: "Match Making Compatibility / Kundali Dosha",

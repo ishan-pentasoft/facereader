@@ -140,6 +140,13 @@ const AppSidebar = () => {
                         </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <Link href="/admin/dashboard/face-reading">
+                          <span>Face Reading Page</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
                   </SidebarMenuSub>
                 </CollapsibleContent>
               </SidebarMenuItem>
