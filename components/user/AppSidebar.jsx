@@ -10,6 +10,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "../ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +23,7 @@ import {
   BookUser,
   LockKeyhole,
   MessageSquareText,
+  ChevronRight,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -33,6 +37,12 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useEffect, useState } from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible";
+import { IconKeyframesFilled } from "@tabler/icons-react";
 
 const AppSidebar = () => {
   const isMobile = useIsMobile();
@@ -54,10 +64,12 @@ const AppSidebar = () => {
           <SidebarMenuItem className="flex items-center justify-center py-2">
             <Link href="/">
               <Image
-                src={"/nav_logo.png"}
-                alt="Logo"
+                src="/admin_logo.png"
+                alt="admin logo"
                 width={120}
                 height={120}
+                priority
+                unoptimized
               />
             </Link>
           </SidebarMenuItem>
@@ -99,6 +111,32 @@ const AppSidebar = () => {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+            <Collapsible
+              asChild
+              defaultOpen={false}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip="Users" className="cursor-pointer">
+                    <IconKeyframesFilled />
+                    <span>Site Pages</span>
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <Link href="/admin/dashboard/about">
+                          <span>About Us</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

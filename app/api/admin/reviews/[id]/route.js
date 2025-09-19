@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { unlink } from "fs/promises";
 import path from "path";
 
-export async function DELETE({ params }) {
+export async function DELETE(request, { params }) {
   try {
     const { id } = params;
 
