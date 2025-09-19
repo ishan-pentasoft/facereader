@@ -50,3 +50,12 @@ model About {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Astrology {
+  id          String   @id @default(uuid())
+  name        String
+  image       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

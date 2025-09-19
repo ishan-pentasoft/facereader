@@ -6,30 +6,30 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 
-const AboutContent = () => {
-  const [about, setAbout] = useState(null);
+const AstrologyContent = () => {
+  const [astrology, setAstrology] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchAbout = async () => {
+  const fetchAstrology = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/user/pages/about", {
+      const response = await fetch("/api/user/pages/astrology", {
         method: "GET",
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setAbout(data.success ? data.about : null);
+      setAstrology(data.success ? data.astrology : null);
     } catch (error) {
-      console.error("Error fetching about:", error);
+      console.error("Error fetching astrology:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchAbout();
+    fetchAstrology();
   }, []);
 
   // Animation variants
@@ -69,7 +69,7 @@ const AboutContent = () => {
   };
 
   // Loading skeleton component
-  const AboutSkeleton = () => (
+  const AstrologySkeleton = () => (
     <section className="max-w-5xl mx-auto p-10 border border-foreground/20 rounded-xl mb-10 bg-accent/80 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       <Skeleton className="h-64 w-full rounded-3xl mb-8" />
       <div className="max-w-3xl mx-auto w-full my-15">
@@ -98,9 +98,9 @@ const AboutContent = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <AboutSkeleton />
+            <AstrologySkeleton />
           </motion.div>
-        ) : about ? (
+        ) : astrology ? (
           <motion.section
             key="content"
             className="max-w-5xl mx-auto p-10 border border-foreground/20 rounded-xl mb-10 bg-accent/80 shadow-[0_3px_10px_rgb(0,0,0,0.2)] relative"
@@ -118,12 +118,12 @@ const AboutContent = () => {
 
             <motion.div variants={imageVariants}>
               <Image
-                src={about.image}
-                alt={about.name}
+                src={astrology.image}
+                alt={astrology.name}
                 width={500}
                 height={500}
                 draggable={false}
-                className="h-full w-full aspect-video rounded-3xl object-cover object-center"
+                className="h-full w-full aspect-video rounded-3xl object-contain bg-white object-center"
               />
             </motion.div>
 
@@ -132,14 +132,16 @@ const AboutContent = () => {
               variants={itemVariants}
             >
               <h2 className="font-norican text-4xl font-semibold tracking-widest text-center">
-                <Highlight className="text-white p-2">{about.name}</Highlight>
+                <Highlight className="text-white p-2">
+                  {astrology.name}
+                </Highlight>
               </h2>
             </motion.div>
 
             <motion.div
               className="prose-blog text-justify"
               variants={itemVariants}
-              dangerouslySetInnerHTML={{ __html: about.description }}
+              dangerouslySetInnerHTML={{ __html: astrology.description }}
             />
           </motion.section>
         ) : (
@@ -151,7 +153,7 @@ const AboutContent = () => {
             transition={{ duration: 0.5 }}
           >
             <p className="text-muted-foreground">
-              Failed to load about information.
+              Failed to load astrology information.
             </p>
           </motion.div>
         )}
@@ -160,4 +162,4 @@ const AboutContent = () => {
   );
 };
 
-export default AboutContent;
+export default AstrologyContent;
