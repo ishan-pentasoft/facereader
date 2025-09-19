@@ -67,42 +67,47 @@ const ReviewForm = () => {
     }
   }, []);
 
-  const onSubmit = useCallback(async (data) => {
-    setIsSubmitting(true);
+  const onSubmit = useCallback(
+    async (data) => {
+      setIsSubmitting(true);
 
-    try {
-      const reviewData = {
-        name: data.name,
-        review: data.review,
-        image: uploadedImage || "",
-      };
+      try {
+        const reviewData = {
+          name: data.name,
+          review: data.review,
+          image: uploadedImage || "",
+        };
 
-      const response = await fetch("/api/user/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reviewData),
-      });
+        const response = await fetch("/api/user/reviews", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reviewData),
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || "Failed to submit review");
+        if (!response.ok) {
+          throw new Error(result.error || "Failed to submit review");
+        }
+
+        toast.success(
+          "Thank you! Your review has been submitted successfully."
+        );
+
+        form.reset();
+        setUploadedImage(null);
+        setFileUploadKey(Date.now());
+      } catch (error) {
+        console.error("Submit error:", error);
+        toast.error(error.message || "Failed to submit review");
+      } finally {
+        setIsSubmitting(false);
       }
-
-      toast.success("Thank you! Your review has been submitted successfully.");
-
-      form.reset();
-      setUploadedImage(null);
-      setFileUploadKey(Date.now());
-    } catch (error) {
-      console.error("Submit error:", error);
-      toast.error(error.message || "Failed to submit review");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [uploadedImage, form]);
+    },
+    [uploadedImage, form]
+  );
 
   return (
     <section className="py-20 relative overflow-hidden">
@@ -144,12 +149,20 @@ const ReviewForm = () => {
         </motion.div>
 
         <motion.div
-          className="bg-accent/90 backdrop-blur-sm border border-foreground/15 rounded-2xl p-8 shadow-2xl"
+          className="bg-accent/90 relative backdrop-blur-sm border border-foreground/15 rounded-2xl p-8 shadow-2xl"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
+          <Image
+            src="/page_bg.jpg"
+            alt="Page Background"
+            height={500}
+            width={500}
+            className="absolute opacity-30 top-0 left-0 h-full w-full object-cover object-center z-[-1] rounded-2xl"
+          />
+
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="space-y-3">
@@ -169,7 +182,7 @@ const ReviewForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Enter your full name"
-                        className="border-foreground/15 placeholder:text-muted-foreground h-12"
+                        className="border-foreground/15 bg-white placeholder:text-muted-foreground h-12"
                         {...field}
                       />
                     </FormControl>
@@ -189,7 +202,7 @@ const ReviewForm = () => {
                     <FormControl>
                       <Textarea
                         placeholder="Share your experience with our astrology services..."
-                        className="border-foreground/15 placeholder:text-muted-foreground min-h-32 resize-none"
+                        className="border-foreground/15 bg-white placeholder:text-muted-foreground min-h-32 resize-none"
                         {...field}
                       />
                     </FormControl>

@@ -82,9 +82,16 @@ const Testimonial = () => {
         </motion.div>
 
         <section
-          className="max-w-5xl mx-auto px-8 pb-10 border border-foreground/20 rounded-xl mb-10 bg-accent/80 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+          className="max-w-5xl mx-auto px-8 pb-10 border border-foreground/20 rounded-xl relative mb-10 bg-accent/80 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
           aria-label="Our Testimonials"
         >
+          <Image
+            src="/page_bg.jpg"
+            alt="Page background"
+            height={500}
+            width={500}
+            className="absolute rounded-xl h-full w-full top-0 left-0 object-cover object-center z-[-1]"
+          />
           <AnimatedTestimonials testimonials={testimonials} />
         </section>
       </div>
