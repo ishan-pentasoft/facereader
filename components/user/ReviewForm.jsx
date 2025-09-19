@@ -77,7 +77,7 @@ const ReviewForm = () => {
         image: uploadedImage || "",
       };
 
-      const response = await fetch("/api/reviews", {
+      const response = await fetch("/api/user/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
