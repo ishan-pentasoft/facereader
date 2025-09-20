@@ -1,4 +1,5 @@
 import Dock from "@/components/user/Dock";
+import Footer from "@/components/user/Footer";
 import TopBanner from "@/components/user/TopBanner";
 
 export default function RootLayout({ children }) {
@@ -7,6 +8,7 @@ export default function RootLayout({ children }) {
       <TopBanner />
       <Dock />
       {children}
+      <Footer />
     </main>
   );
 }
