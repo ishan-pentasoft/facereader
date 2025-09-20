@@ -1,232 +1,308 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { contactDetailsSchema } from "@/validation/contact.schema";
-import { toast } from "sonner";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import React, { useEffect, useMemo, useState } from "react";
+import { Loader2, Eye, Trash2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-const FormSchema = contactDetailsSchema;
+const PAGE_SIZE_OPTIONS = [10, 20, 50];
 
-export default function ContactDetailsPage() {
+export default function AdminContactPage() {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [contacts, setContacts] = useState([]);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[0]);
+  const [sortAsc, setSortAsc] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
-  const form = useForm({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      phone1: "",
-      phone2: "",
-      whatsapp: "",
-      email: "",
-      address: "",
-    },
-    mode: "onBlur",
-  });
-
-  // Load existing contact details
   useEffect(() => {
-    let active = true;
-    (async () => {
+    const load = async () => {
       try {
-        const res = await fetch("/api/admin/contact-details", {
-          credentials: "include",
+        setLoading(true);
+        setError(null);
+        const res = await fetch("/api/contact/getAllContacts", {
+          method: "GET",
+          cache: "no-store",
         });
-        if (!res.ok) throw new Error("Failed to load contact details");
-        const json = await res.json();
-        const data = json?.data;
-        if (active && data) {
-          form.reset({
-            phone1: data.phone1 ?? "",
-            phone2: data.phone2 ?? "",
-            whatsapp: data.whatsapp ?? "",
-            email: data.email ?? "",
-            address: data.address ?? "",
-          });
-        }
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || "Failed to load contacts");
+        setContacts(data.contacts || []);
       } catch (e) {
-        toast.error("Could not load contact details");
+        setError(e?.message || "Something went wrong");
       } finally {
-        if (active) setLoading(false);
+        setLoading(false);
       }
-    })();
-    return () => {
-      active = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    load();
   }, []);
 
-  async function onSubmit(values) {
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const base = q
+      ? contacts.filter((c) => {
+          return (
+            c.name.toLowerCase().includes(q) ||
+            c.email.toLowerCase().includes(q) ||
+            c.phone.toLowerCase().includes(q) ||
+            c.subject.toLowerCase().includes(q)
+          );
+        })
+      : contacts;
+    const sorted = [...base].sort((a, b) => {
+      const da = new Date(a.createdAt).getTime();
+      const db = new Date(b.createdAt).getTime();
+      return sortAsc ? da - db : db - da;
+    });
+    return sorted;
+  }, [contacts, query, sortAsc]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  const start = (currentPage - 1) * pageSize;
+  const rows = filtered.slice(start, start + pageSize);
+
+  useEffect(() => {
+    setPage(1);
+  }, [query, pageSize]);
+
+  async function handleDelete(contactId) {
+    setDeletingId(contactId);
+    setError(null);
+
     try {
-      const res = await fetch("/api/admin/contact-details", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(values),
+      const res = await fetch(`/api/contact/contactById/${contactId}`, {
+        method: "DELETE",
       });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err?.error || "Failed to save contact details");
-      }
+      if (!res.ok) throw new Error("Delete failed");
 
-      toast.success("Contact details saved");
+      // Remove the contact from the local state
+      setContacts(contacts.filter((contact) => contact.id !== contactId));
     } catch (e) {
-      toast.error(e.message || "Something went wrong");
+      setError(e.message || "Failed to delete contact");
+    } finally {
+      setDeletingId(null);
     }
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl p-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">Contact Details</CardTitle>
-          <CardDescription>
-            Manage public-facing contact information.
-          </CardDescription>
-        </CardHeader>
-        <Separator className="mb-2" />
+    <div className="flex-1 space-y-8 p-4 sm:p-6 md:p-8 lg:p-10">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-2xl sm:text-3xl font-semibold">Contacts</h1>
 
-        <CardContent>
-          {loading ? (
-            <div>
-              <div className="space-y-4">
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-9 w-full" />
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-9 w-full" />
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-9 w-full" />
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-9 w-full" />
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-32 w-full" />
-              </div>
-            </div>
-          ) : (
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div className="space-y-5">
-                  <FormField
-                    control={form.control}
-                    name="phone1"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone 1</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Primary phone number"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+        <div className="flex w-full sm:w-auto items-center gap-2">
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search..."
+            className="w-full sm:max-w-[15rem] md:max-w-[20rem]"
+          />
+          <Button
+            variant="outline"
+            onClick={() => setSortAsc((s) => !s)}
+            title={sortAsc ? "Sort: Oldest first" : "Sort: Newest first"}
+            className="cursor-pointer"
+          >
+            {sortAsc ? "Oldest" : "Newest"}
+          </Button>
+        </div>
+      </div>
 
-                  <FormField
-                    control={form.control}
-                    name="phone2"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone 2</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Secondary phone number"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="whatsapp"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>WhatsApp</FormLabel>
-                        <FormControl>
-                          <Input placeholder="WhatsApp number" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="name@example.com"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Address</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            rows={6}
-                            placeholder="Business address"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <CardFooter className="justify-end p-0 mt-10">
-                  <Button
-                    type="submit"
-                    disabled={form.formState.isSubmitting}
-                    className="cursor-pointer"
+      <div className="overflow-x-auto rounded-xl border bg-background">
+        {loading ? (
+          <div className="flex items-center justify-center py-20 text-muted-foreground">
+            <Loader2 className="size-5 animate-spin mr-2" /> Loading contacts...
+          </div>
+        ) : error ? (
+          <div className="text-destructive py-10 text-center">{error}</div>
+        ) : rows.length === 0 ? (
+          <div className="py-10 text-center text-muted-foreground">
+            No contacts found.
+          </div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="min-w-[120px]">Name</TableHead>
+                <TableHead className="min-w-[150px] hidden sm:table-cell">
+                  Email
+                </TableHead>
+                <TableHead className="min-w-[120px] hidden md:table-cell">
+                  Phone
+                </TableHead>
+                <TableHead className="min-w-[180px]">Subject</TableHead>
+                <TableHead className="min-w-[160px] hidden lg:table-cell">
+                  Created
+                </TableHead>
+                <TableHead className="w-0 text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map((c) => (
+                <TableRow key={c.id}>
+                  <TableCell className="font-medium">{c.name}</TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    {c.email}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {c.phone}
+                  </TableCell>
+                  <TableCell
+                    className="max-w-[150px] truncate"
+                    title={c.subject}
                   >
-                    {form.formState.isSubmitting ? "Saving..." : "Save"}
-                  </Button>
-                </CardFooter>
-              </form>
-            </Form>
-          )}
-        </CardContent>
-      </Card>
+                    {c.subject}
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell">
+                    {new Date(c.createdAt).toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex gap-2 justify-end">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="cursor-pointer"
+                          >
+                            <Eye className="size-4 mr-2" /> View
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>{c.subject}</DialogTitle>
+                            <DialogDescription className="text-[12px]">
+                              Submitted by {c.name} • {c.email} <br /> {c.phone}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="mt-2 whitespace-pre-wrap text-sm">
+                            {c.message}
+                          </div>
+                          <div className="mt-4 text-xs text-muted-foreground">
+                            Created: {new Date(c.createdAt).toLocaleString()}
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            disabled={deletingId === c.id}
+                            className="cursor-pointer"
+                          >
+                            {deletingId === c.id ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Delete Contact Message
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete the message from "
+                              {c.name}"? This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel className="cursor-pointer">
+                              Cancel
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(c.id)}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 cursor-pointer"
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </div>
+
+      {!loading && !error && filtered.length > 0 && (
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="text-sm text-muted-foreground">
+            Showing {start + 1}-{Math.min(start + pageSize, filtered.length)} of{" "}
+            {filtered.length}
+          </div>
+          <div className="flex items-center justify-between gap-2">
+            <select
+              className="border bg-background px-2 py-1 rounded-md text-sm cursor-pointer"
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              {PAGE_SIZE_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt} / page
+                </option>
+              ))}
+            </select>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                className="cursor-pointer"
+              >
+                Prev
+              </Button>
+              <span className="text-sm">
+                Page {currentPage} / {pageCount}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage >= pageCount}
+                onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                className="cursor-pointer"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

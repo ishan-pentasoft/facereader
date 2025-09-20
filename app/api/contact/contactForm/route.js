@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ipqsValidatePhone } from "@/lib/ipqs";
+import { ipqsValidatePhone } from "@/lib/ipqs.js";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 

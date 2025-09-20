@@ -77,7 +77,9 @@ const ContactInfoCard = ({ icon: Icon, title, children }) => {
         <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center shadow-sm ring-1 ring-black/5">
           <Icon className="h-6 w-6 text-orange-600" aria-hidden="true" />
         </div>
-        <h3 className="mt-6 text-xl font-extrabold tracking-tight">{title}</h3>
+        <h3 className="mt-6 text-2xl font-extrabold tracking-widest font-norican">
+          {title}
+        </h3>
         <div className="mt-2 text-muted-foreground text-sm">{children}</div>
       </div>
     </div>
@@ -88,7 +90,7 @@ const ContactInfoSection = () => {
   const { contact } = useContactDetails();
 
   return (
-    <section aria-labelledby="contact-info-heading" className="py-14 md:py-20">
+    <section aria-labelledby="contact-info-heading" className="py-10">
       <div className="max-w-[100rem] mx-auto px-4 sm:px-6">
         <h2 id="contact-info-heading" className="sr-only">
           Contact information
