@@ -24,6 +24,7 @@ import {
   LockKeyhole,
   MessageSquareText,
   ChevronRight,
+  ShoppingBag,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -107,6 +108,16 @@ const AppSidebar = () => {
                   <MessageSquareText />
                   <span className="group-data-[collapsible=icon]:hidden">
                     Reviews
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Services">
+                <Link href="/admin/dashboard/services">
+                  <ShoppingBag />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Services
                   </span>
                 </Link>
               </SidebarMenuButton>
