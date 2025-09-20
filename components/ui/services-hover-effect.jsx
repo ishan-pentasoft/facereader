@@ -30,7 +30,7 @@ export const HoverEffect = ({ items, className }) => {
       {items.map((item, idx) => (
         <motion.a
           href={item?.link}
-          key={item?.title}
+          key={item?.link}
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -87,8 +87,8 @@ export const Card = ({ className, children }) => {
         className
       )}
     >
-      <div className="relative z-50">
-        <div className="p-4">{children}</div>
+      <div className="relative z-50 h-full">
+        <div className="p-4 h-full flex flex-col">{children}</div>
       </div>
       <Image
         src="/hand_bg.png"
@@ -104,7 +104,7 @@ export const CardTitle = ({ className, children }) => {
   return (
     <h4
       className={cn(
-        "font-bold font-norican text-2xl text-center tracking-wider mt-4 group-hover:text-white transition-colors",
+        "font-bold font-norican text-xl text-center tracking-normal letter-spacing-1 my-4 group-hover:text-white transition-colors",
         className
       )}
     >
@@ -126,7 +126,7 @@ export const CardDescription = ({ className, children }) => {
   return (
     <p
       className={cn(
-        "mt-4 text-justify font-roboto text-muted-foreground group-hover:text-white tracking-wide leading-relaxed text-sm transition-colors",
+        "mt-auto text-center font-roboto text-muted-foreground group-hover:text-white tracking-wide leading-relaxed text-sm transition-colors",
         className
       )}
     >

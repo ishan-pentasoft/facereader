@@ -91,7 +91,7 @@ const Dock = () => {
           className="text-orange-800 fill-orange-500"
         />
       ),
-      href: "/",
+      href: "/buy-services",
     },
     {
       title: "Contact Us",

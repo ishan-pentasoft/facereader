@@ -37,7 +37,7 @@ const WhyChooseUs = () => {
 
       <div className="relative z-40 text-center max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <TextGenerateEffect
-          words="Why Choose Us"
+          words="Now We Have"
           className="text-white text-center font-norican text-4xl font-semibold tracking-widest"
         />
         <motion.div
@@ -67,40 +67,33 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
         >
           With Decades of Experience and Thousands of Happy Clients, Your Stars
-          Are in Safe Hands
         </motion.p>
 
         {/* Counter Stats */}
         <motion.div
-          className="grid  md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 px-4"
+          className="grid  md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 px-4"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
         >
           <DecorativeCounter
-            title="Years of Experience"
-            count={40}
+            title="Trusted By Thousand Clients"
+            count={25}
             suffix="+"
             delay={0.9}
           />
           <DecorativeCounter
-            title="Types of Horoscopes"
-            count={55}
+            title="Years Of Experience"
+            count={40}
             suffix="+"
             delay={1.0}
           />
           <DecorativeCounter
-            title="Success Horoscopes"
-            count={98}
+            title="Success Horoscope"
+            count={89}
             suffix="+"
             delay={1.1}
-          />
-          <DecorativeCounter
-            title="Trusted By Million Clients"
-            count={100}
-            suffix="+"
-            delay={1.2}
           />
         </motion.div>
       </div>

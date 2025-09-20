@@ -27,7 +27,7 @@ const ServiceGrid = memo(() => {
       title: "Vastu Shastra",
       description:
         "Vastu Shastra, science of construction, architecture is a traditional Hindu system.",
-      link: "/vastu-shastra",
+      link: "/vastu",
       icon: <IconBuildingPavilion className="w-12 h-12" />,
     },
     {
@@ -41,21 +41,21 @@ const ServiceGrid = memo(() => {
       title: "Match Making",
       description:
         "While matching Horoscopes, Boys and Girls are given consultation for their life partner.",
-      link: "/match-making",
+      link: "/kundali-dosha",
       icon: <IconHeartHandshake className="w-12 h-12" />,
     },
     {
       title: "Crystal Ball",
       description:
         "Astrology is an ancient Indian science, which describes planetary motions.",
-      link: "/crystal-ball",
+      link: "/astrology",
       icon: <IconCrystalBall className="w-12 h-12" />,
     },
     {
       title: "Kundli Dosh",
       description:
         "While matching Horoscopes, Boys and Girls are given consultation for their life partner.",
-      link: "/kundli-dosh",
+      link: "/kundali-dosha",
       icon: <IconZodiacCancer className="w-12 h-12" />,
     },
   ];
