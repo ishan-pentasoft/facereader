@@ -43,7 +43,8 @@ function transformServiceData(services) {
   return services.map((service) => ({
     title: service.title,
     description: formatPrice(service.price, service.currency),
-    link: `/services/${service.slug}`,
+    serviceSlug: service.slug,
+    serviceId: service.id,
     icon: (
       <Image
         src={service.image || "/services/default-service.jpg"}

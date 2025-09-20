@@ -3,6 +3,8 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 import { useState } from "react";
 
@@ -28,8 +30,7 @@ export const HoverEffect = ({ items, className }) => {
       }}
     >
       {items.map((item, idx) => (
-        <motion.a
-          href={item?.link}
+        <motion.div
           key={item?.link}
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
@@ -72,8 +73,13 @@ export const HoverEffect = ({ items, className }) => {
             <CardIcon>{item.icon}</CardIcon>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
+            <CardButton
+              serviceSlug={item.serviceSlug}
+              serviceTitle={item.title}
+              servicePrice={item.description}
+            />
           </Card>
-        </motion.a>
+        </motion.div>
       ))}
     </motion.div>
   );
@@ -126,11 +132,28 @@ export const CardDescription = ({ className, children }) => {
   return (
     <p
       className={cn(
-        "mt-auto text-center font-roboto text-muted-foreground group-hover:text-white tracking-wide leading-relaxed text-sm transition-colors",
+        "text-center font-roboto text-muted-foreground group-hover:text-white tracking-wide leading-relaxed text-sm transition-colors mb-4",
         className
       )}
     >
       {children}
     </p>
+  );
+};
+
+export const CardButton = ({ serviceSlug, serviceTitle, servicePrice }) => {
+  return (
+    <div className="mt-auto pt-4">
+      <Link
+        href={`/appointment?slug=${serviceSlug}&title=${encodeURIComponent(
+          serviceTitle
+        )}&price=${encodeURIComponent(servicePrice)}`}
+        className="block w-full"
+      >
+        <Button className="w-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg group-hover:bg-white  group-hover:border-orange-600 cursor-pointer">
+          Buy Service
+        </Button>
+      </Link>
+    </div>
   );
 };
