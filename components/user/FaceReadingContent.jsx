@@ -132,7 +132,7 @@ const FaceReadingContent = () => {
               variants={itemVariants}
             >
               <h2 className="font-norican text-4xl font-semibold tracking-widest text-center">
-                <Highlight className="text-white p-2">
+                <Highlight className="text-white p-2 leading-15">
                   {faceReading.name}
                 </Highlight>
               </h2>

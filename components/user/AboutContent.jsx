@@ -132,7 +132,9 @@ const AboutContent = () => {
               variants={itemVariants}
             >
               <h2 className="font-norican text-4xl font-semibold tracking-widest text-center">
-                <Highlight className="text-white p-2">{about.name}</Highlight>
+                <Highlight className="text-white p-2 leading-15">
+                  {about.name}
+                </Highlight>
               </h2>
             </motion.div>
 
