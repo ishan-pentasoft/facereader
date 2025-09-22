@@ -19,7 +19,7 @@ export const HoverEffect = ({ items, className }) => {
       )}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={{
         hidden: {},
         visible: {
@@ -31,7 +31,7 @@ export const HoverEffect = ({ items, className }) => {
     >
       {items.map((item, idx) => (
         <motion.div
-          key={item?.link}
+          key={item?.title}
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
