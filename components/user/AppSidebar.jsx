@@ -26,6 +26,7 @@ import {
   ChevronRight,
   ShoppingBag,
   Contact2,
+  CalendarDays,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -129,6 +130,16 @@ const AppSidebar = () => {
                   <ShoppingBag />
                   <span className="group-data-[collapsible=icon]:hidden">
                     Services
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Appointments">
+                <Link href="/admin/dashboard/appointments">
+                  <CalendarDays />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Appointments
                   </span>
                 </Link>
               </SidebarMenuButton>
